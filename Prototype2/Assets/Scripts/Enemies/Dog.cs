@@ -6,6 +6,4 @@ using System.Threading.Tasks;
 
 public class Dog: Animal
 {
-
-
 }

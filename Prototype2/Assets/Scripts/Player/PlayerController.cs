@@ -1,17 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-
+    public static int score = 0;
+    public TextMeshProUGUI txt;
     public GameObject projectilePbx;
 
     [SerializeField] private float speed;
-    [SerializeField] private float[] bounds; 
+    [SerializeField] private float[] verticalBounds; 
+    [SerializeField] private float[] horizontalBounds;
+
+    private float verticalInput;
     private float horizontalInput;
-    //public Vector3 projectileOffset;
 
 
     // Start is called before the first frame update
@@ -22,35 +28,49 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        verticalInput = Input.GetAxis("Vertical");
         horizontalInput = Input.GetAxis("Horizontal");
-        Move(horizontalInput);
+        Move(verticalInput, horizontalInput);
         Shoot();
+        UpdateScore();
     }
 
-    void Move(float horizontalInput)
+    void Move(float verticalInput, float horizontalInput)
     {
-        if (!IsOutOfBounds(horizontalInput, transform.position.z))
+        Vector3 currentPosition = transform.position;
+        Vector3 movement = new Vector3(verticalInput * speed * Time.deltaTime * -1, 0f, horizontalInput * speed * Time.deltaTime);
+        Vector3 newPosition = currentPosition + movement;
+        if (!IsOutOfBounds(newPosition))
         {
-            transform.Translate(Vector3.right * horizontalInput * Time.deltaTime * speed);
+            transform.position = newPosition;
         }
     }
 
-    bool IsOutOfBounds(float hInput, float position)
+    bool IsOutOfBounds(Vector3 newPos)
     {
-        float newPosition = hInput + position;
-        if (newPosition <= bounds[0]) return true;
-        else if (newPosition >= bounds[1]) return true;
-        else return false;
+        if((newPos.z < -14 || newPos.z > 34) || (newPos.x < 10 || newPos.x > 23))
+        {
+            return true;
+        }
+        return false;
     }
 
     void Shoot()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-
-            Instantiate(projectilePbx, 
-                new Vector3(transform.position.x, 2, transform.position.z), 
-                projectilePbx.transform.rotation);
+            Vector3 currentPos = new Vector3(transform.position.x, 2, transform.position.z);
+            GameObject projectile = ProjectilePool.instance.GetPooledObject();
+            projectile.transform.position = currentPos;
+            projectile.SetActive(true);
+            //Instantiate(projectilePbx, 
+            //    new Vector3(transform.position.x, 2, transform.position.z), 
+            //    projectilePbx.transform.rotation);
         }
+    }
+
+    public void UpdateScore()
+    {
+        txt.text = "Score: " + score;
     }
 }

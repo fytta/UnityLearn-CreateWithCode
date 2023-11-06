@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 using static UnityEngine.GraphicsBuffer;
 
 public class SpawnManager : MonoBehaviour
@@ -27,6 +28,7 @@ public class SpawnManager : MonoBehaviour
         {
             int random = Random.Range(0, animalPbxs.Length);
             Vector3 newPos = generateNewPosition();
+            Debug.Log(animalPbxs.Length + " " + random);
             Instantiate(
                 animalPbxs[random],
                 newPos,
