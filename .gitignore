@@ -9,7 +9,7 @@
 */*/[Bb]uilds/
 */*/[Ll]ogs/
 */*/[Uu]ser[Ss]ettings/
-
+*/*/Dist/
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
 */*/[Mm]emoryCaptures/
@@ -70,3 +70,5 @@ sysinfo.txt
 # Temporary auto-generated Android Assets
 */*/[Aa]ssets/[Ss]treamingAssets/aa.meta
 */*/[Aa]ssets/[Ss]treamingAssets/aa/*
+/NextLab
+/Prototype2
