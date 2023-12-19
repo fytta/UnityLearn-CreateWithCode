@@ -445,7 +445,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc5097c0df323d6498a3efd87d534880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 0.5
   hasPowerUp: 0
   powerupIndicator: {fileID: 1949441186}
 --- !u!1 &1211016355
